@@ -13,9 +13,7 @@ def run_rsa(subs,
             run,
             function,
             n_perms,
-            use_controls,
-            use_motion_control=False, 
-            run_age=False):
+            use_controls):
 
     # grab behavioral similarity
     behav_vct = make_behavioral_mtx(get_behav(subs, task, run, ds), function)
@@ -43,7 +41,6 @@ def run_rsa(subs,
                                      ds,
                                      run_age=(task=='age'),
                                      use_controls=use_controls,
-                                     use_motion_control=use_motion_control,
                                      n_perms=n_perms)
 
     df = pd.DataFrame({'r_val': res[:, 0],
@@ -64,12 +61,10 @@ def rsa_wrapper(ds,
                 function,
                 n_perms,
                 use_controls,
-                run_split_half,
-                use_motion_control=False):
+                run_split_half):
     use_controls_title = ''
     if use_controls:
         use_controls_title = 'control'
-
     subs = np.loadtxt(f'subs/{ds}/{run}_subs.txt', dtype=str)
 
     if run_split_half:
@@ -83,8 +78,7 @@ def rsa_wrapper(ds,
                     run,
                     function,
                     n_perms,
-                    use_controls,
-                    use_motion_control=use_motion_control)
+                    use_controls=use_controls)
         df1['half'] = 1
         df1['null_r_vals'] = np.nan
         df2 = run_rsa(subs2,
@@ -93,8 +87,7 @@ def rsa_wrapper(ds,
                     run,
                     function,
                     n_perms,
-                    use_controls,
-                    use_motion_control=use_motion_control)
+                    use_controls=use_controls)
         df2['null_r_vals'] = np.nan
         df2['half'] = 2
 
@@ -108,7 +101,7 @@ def rsa_wrapper(ds,
                     run,
                     function,
                     n_perms,
-                    use_controls)
+                    use_controls=use_controls)
     out_file = f'{out_folder}/out_{ds}_{run}_{task}_{function}_{n_perms}_{use_controls_title}.csv'
     print('saving to: ', out_file)
     df.to_csv(out_file)

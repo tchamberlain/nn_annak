@@ -2,7 +2,6 @@ from itertools import permutations
 import numpy as np
 from scipy import spatial, stats
 import math
-import numpy as np
 # Code adapted from https://github.com/jwcarr/mantel
 
 rand_seeds = np.loadtxt('random_seeds_10k.txt').astype(int)

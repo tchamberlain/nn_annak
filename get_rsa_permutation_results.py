@@ -57,19 +57,19 @@ def _rsa_single_node(node,
                      method,
                      run_age,
                      use_controls, 
-                     use_motion_control=False):
-
+                     use_motion_control=True):
     node_vct = brain_vct[:, node]
     nanmask = ~np.isnan(node_vct)
 
     node_vct_tmp = node_vct[nanmask]
     behav_vct_tmp = behav_vct[nanmask]
-
+    
     if use_controls:
         node_vct_tmp = get_residuals(node_vct, nanmask, subs, use_motion_control=use_motion_control, 
                                      run=run, ds=ds, run_age=run_age)
         behav_vct_tmp = get_residuals(behav_vct, nanmask, subs, use_motion_control=use_motion_control, 
                                       run=run, ds=ds, run_age=run_age)
+
 
     res = mantel_with_rand_seeds.test(node_vct_tmp,
                                       behav_vct_tmp,
@@ -87,9 +87,9 @@ def get_rsa_permutation_results(brain_vct,
                                 ds,
                                 n_perms=1000,
                                 method='spearman',
-                                use_motion_control=True,
                                 run_age=False,
-                                use_controls=True):
+                                use_controls=True, 
+                                use_motion_control=True):
 
     n_nodes = brain_vct.shape[1]
 
@@ -104,9 +104,9 @@ def get_rsa_permutation_results(brain_vct,
             ds,
             n_perms,
             method,
-            run_age,
-            use_controls, 
-            use_motion_control,
+            run_age=run_age,
+            use_controls=use_controls, 
+            use_motion_control=use_motion_control,
         )
         for node in range(n_nodes)
     )

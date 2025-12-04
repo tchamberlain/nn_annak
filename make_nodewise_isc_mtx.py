@@ -5,9 +5,6 @@ def get_all_timeseries_mtx(subs, run):
     """
     Takes a list of subjects and a run, and returns a matrix that is nodes x TRs x subs
     """
-    print('len subs', len(subs))
-    if 'movieDM' in run:
-        run = 'movieDM'
     to_concat  = []
     for sub in subs:
         x = np.loadtxt(f'./data/ts_files/{sub}_{run}.txt')
