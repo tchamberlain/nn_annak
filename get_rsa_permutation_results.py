@@ -4,7 +4,6 @@ import pandas as pd
 import mantel_with_rand_seeds
 from statsmodels.formula.api import ols
 from scipy import stats
-from tqdm import tqdm
 from make_behavioral_mtx import get_behav, make_behavioral_mtx
 from joblib import Parallel, delayed
 
